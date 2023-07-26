@@ -15,102 +15,154 @@
   </head>
   <body>
     <div id="app">
-      <nav class="navbar">
-        <div class="nav-left">
-          <span class="nav-item">
-            <a href="#top-tracks" class="nav-link">Top Tracks</a>
+      <div class="alt-bg"></div>
 
-            <div class="dropdown">
-              <a href="#top-tracks" class="dropdown-link">Top Artist</a>
+      <div class="inner-app">
+        <nav class="navbar">
+          <div class="nav-left nav-left-track">
+            <span class="nav-item">
+              <a
+                href="#top-tracks"
+                class="nav-link nav-left-link"
+                data-target-section="topTracks"
+                >Top Tracks</a
+              >
+
+              <div class="dropdown">
+                <a
+                  href="#top-artists"
+                  class="dropdown-link nav-left-link"
+                  data-target-section="topArtists"
+                  >Top Artists</a
+                >
+              </div>
+            </span>
+          </div>
+
+          <div class="nav-left nav-left-artist">
+            <span class="nav-item">
+              <a
+                href="#top-artists"
+                class="nav-link nav-left-link"
+                data-target-section="topArtists"
+                >Top Artists</a
+              >
+
+              <div class="dropdown">
+                <a
+                  href="#top-tracks"
+                  class="dropdown-link nav-left-link"
+                  data-target-section="topTracks"
+                  >Top Tracks</a
+                >
+              </div>
+            </span>
+          </div>
+
+          <div class="nav-right">
+            <span class="nav-item nav-user"
+              ><p class="nav-username">545plea</p></span
+            >
+
+            <span class="nav-item"
+              ><a href="#logOut" class="nav-link nav-log-out">Log Out</a></span
+            >
+          </div>
+        </nav>
+
+        <section class="log-in-section">
+          <h2>Log In To Spotify</h2>
+          <button type="button" class="log-in-btn btn-1">
+            Log in <i class="fa-brands fa-spotify spotify-icon"></i>
+          </button>
+        </section>
+
+        <div class="spinner"></div>
+
+        <section class="intro">
+          <h1 class="intro-head">
+            Welcome, <span class="intro-username"></span>!
+          </h1>
+          <p class="intro-lead">
+            Who and What have you been listening to this Month?
+          </p>
+
+          <div class="intro-btns">
+            <button
+              class="intro-btn intro-btn-1 btn-1"
+              data-show-top="user-top-tracks"
+            >
+              See Top Tracks
+            </button>
+
+            <button
+              class="intro-btn intro-btn-2 btn-1"
+              data-show-top="user-top-artists"
+            >
+              See Top Artists
+            </button>
+          </div>
+        </section>
+
+        <section class="open-section">
+          <h2 class="open-username open-item"></h2>
+          <h2 class="open-lead open-item">
+            Your top <span class="nameOfRequest"></span>
+          </h2>
+          <h2 class="open-lead-2 open-item">are</h2>
+        </section>
+
+        <div class="top-container">
+          <section class="top-1-section">
+            <audio no-controls class="audio-el" autoplay="false"></audio>
+            <div class="top-left">
+              <img
+                src="https://github.githubassets.com/images/modules/site/copilot-preview/ui-demo.webp"
+                class="top-album-image"
+              />
             </div>
-          </span>
+
+            <div class="top-right">
+              <div class="track-info top-1-main">
+                <p class="info-head">
+                  Top <span class="requestedData">Track</span>
+                </p>
+                <h1 class="info-detail info-top-name">Fukumean</h1>
+              </div>
+
+              <div class="track-info from-album">
+                <p class="info-head from-album-label">From</p>
+                <h1 class="info-detail info-album-name">
+                  Nothing Was The Same
+                </h1>
+              </div>
+
+              <div class="track-info from-artist">
+                <p class="info-head artist-label">By</p>
+                <h1 class="info-detail info-artist-name">Gunna</h1>
+              </div>
+
+              <a
+                class="see-more see-more-tracks"
+                data-more-info="all-top-tracks"
+                href="#allTracks"
+                >See More Tracks</a
+              >
+
+              <a
+                class="see-more see-more-artists"
+                data-more-info="all-top-artists"
+                href="#allTracks"
+                >See More Artists</a
+              >
+            </div>
+          </section>
+
+          <section class="top-20">hello world</section>
         </div>
 
-        <div class="nav-right">
-          <span class="nav-item nav-user"
-            ><p class="nav-username">545plea</p></span
-          >
-
-          <span class="nav-item"
-            ><a href="#logOut" class="nav-link nav-log-out">Log Out</a></span
-          >
-        </div>
-      </nav>
-
-      <section class="log-in-section">
-        <h2>Log In To Spotify</h2>
-        <button type="button" class="log-in-btn btn-1">
-          Log in <i class="fa-brands fa-spotify spotify-icon"></i>
-        </button>
-      </section>
-
-      <div class="spinner"></div>
-
-      <section class="intro">
-        <h1 class="intro-head">
-          Welcome, <span class="intro-username"></span>!
-        </h1>
-        <p class="intro-lead">
-          Who and What have you been listening to this Month?
-        </p>
-
-        <div class="intro-btns">
-          <button
-            class="intro-btn intro-btn-1 btn-1"
-            data-show-top="user-top-tracks"
-          >
-            See Top Tracks
-          </button>
-
-          <button
-            class="intro-btn intro-btn-2 btn-1"
-            data-show-top="user-top-artists"
-          >
-            See Top Artists
-          </button>
-        </div>
-      </section>
-
-      <section class="open-section">
-        <h2 class="open-username open-item"></h2>
-        <h2 class="open-lead open-item">
-          Your top <span class="nameOfRequest"></span>
-        </h2>
-        <h2 class="open-lead-2 open-item">are</h2>
-      </section>
-
-      <section class="top-tracks">
-        <audio no-controls class="audio-el" autoplay="false"></audio>
-        <div class="top-left">
-          <img
-            src="https://github.githubassets.com/images/modules/site/copilot-preview/ui-demo.webp"
-            class="top-album-image"
-          />
-        </div>
-
-        <div class="top-right">
-          <div class="track-info">
-            <p class="info-head">Top Track</p>
-            <h1 class="info-detail info-track-name">Fukumean</h1>
-          </div>
-
-          <div class="track-info">
-            <p class="info-head">From</p>
-            <h1 class="info-detail info-album-name">Nothing Was The Same</h1>
-          </div>
-
-          <div class="track-info">
-            <p class="info-head">By</p>
-            <h1 class="info-detail info-artist-name">Gunna</h1>
-          </div>
-
-          <a class="see-more" data-more-info="all-top-tracks" href="#allTracks"
-            >See More Tracks</a
-          >
-        </div>
-      </section>
-
-      <footer class="app-footer">djj</footer>
+        <footer class="app-footer">djj</footer>
+      </div>
     </div>
   </body>
 </html>
