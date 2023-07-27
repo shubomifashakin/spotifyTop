@@ -1,6 +1,6 @@
 import { user } from "../../_model";
 import { gsap } from "gsap";
-import { similarArtists } from "../helpers/_actions";
+import { similarArtists, similarSongs } from "../helpers/_actions";
 
 class top20 {
   top20Container = document.querySelector(".top-20");
@@ -45,12 +45,16 @@ class top20 {
       //if there is a timeline when a non child is clicked, reverse the timeline, if there isnt do nothing
       this.timeLine ? this.timeLine.reverse() : null;
 
+      //clear the similar  container of previous html
+      this.focusSimilarInnerOverflowCont.innerHTML = "";
+
       //remove the focused class from focused items
       this.removeFocusClassFromAllItems();
     } else if (inDisplay !== "none" && e.target.closest(".top-item")) {
       //the item clicked
       const elClicked = e.target.closest(".top-item");
-      console.log(elClicked);
+      const typeOfRequest = elClicked.dataset.label;
+      console.log(elClicked, typeOfRequest);
 
       //remove the focused class from every item
       this.removeFocusClassFromAllItems();
@@ -92,24 +96,43 @@ class top20 {
       //get the similar artists from spotify
       const requestId = elClicked.dataset.requestId;
       console.log(requestId);
+
+      const similarData = await this.handleSimilarData(
+        requestId,
+        typeOfRequest
+      );
+      this.insertSimilarHtml(similarData);
+    }
+  }
+
+  async handleSimilarData(requestId, typeOfRequest) {
+    if (typeOfRequest === "Artist") {
       const { artists: similar } = await similarArtists(
         user.getAccessToken,
         requestId
       );
-      console.log(similar);
+      return this.randomlySelectSimilarData(similar);
+    } else {
+      const { tracks: similarTracks } = await similarSongs(
+        user.getAccessToken,
+        requestId
+      );
 
-      //get 5 random similar atists from the data returned
-      const arr = [
-        Math.trunc(Math.random() * 20),
-        Math.trunc(Math.random() * 20),
-      ];
-      const simStart = Math.min(...arr);
-      const simStop = Math.max(...arr);
-      const randomSimilar = similar.slice(simStart, simStop + 1);
-
-      console.log(randomSimilar);
-      this.insertSimilarHtml(randomSimilar);
+      return this.randomlySelectSimilarData(similarTracks);
     }
+  }
+
+  randomlySelectSimilarData(similar) {
+    //get random similar atists from the data returned
+    const arr = [
+      Math.trunc(Math.random() * 20),
+      Math.trunc(Math.random() * 20),
+    ];
+    const simStart = Math.min(...arr);
+    const simStop = Math.max(...arr);
+    const randomSimilar = similar.slice(simStart, simStop + 1);
+
+    return randomSimilar;
   }
 
   removeFocusClassFromAllItems() {
@@ -131,12 +154,19 @@ class top20 {
 
   //insertSimilarHtml
   insertSimilarHtml(similarData) {
+    console.log(similarData);
     //clear the similar  container of previous html
     this.focusSimilarInnerOverflowCont.innerHTML = "";
     let html = "";
     for (let x = 0; x < similarData.length; x++) {
-      const loopHtml = `<a href=${similarData[x].external_urls.spotify} class="similar-data">
-        <img src=${similarData[x].images[0].url} class="similar-image" />
+      const loopHtml = `<a href=${
+        similarData[x].external_urls.spotify
+      } class="similar-data">
+        <img src=${
+          similarData[x].images
+            ? similarData[x]?.images[0].url
+            : similarData[x].album.images[0].url
+        } class="similar-image" />
       </a>`;
 
       html += loopHtml;

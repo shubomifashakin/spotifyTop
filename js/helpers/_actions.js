@@ -77,3 +77,28 @@ export async function similarArtists(token, id) {
     throw err;
   }
 }
+
+export async function similarSongs(token, trackId) {
+  try {
+    const result = await fetch(
+      `https://api.spotify.com/v1/recommendations?seed_tracks=${trackId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!result.ok) {
+      throw new Error(result.status);
+    }
+
+    const data = await result.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+
+    throw err;
+  }
+}

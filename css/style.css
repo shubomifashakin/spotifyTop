@@ -173,7 +173,6 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   display: flex;
-  justify-content: space-between;
   scrollbar-color: var(--primary-color) #000;
   scrollbar-width: thin;
 }
@@ -197,6 +196,10 @@ body {
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+  transition: linear 0.3s;
+}
+.top-container .top-20 .top-20-focus .focus-similar .focus-similar-inner .focus-similar-overflow .similar-data .similar-image:hover {
+  filter: grayscale(20);
 }
 .top-container .top-20 .top-20-focus .focus-label {
   color: #cccccc;

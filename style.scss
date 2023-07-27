@@ -196,7 +196,7 @@ body {
             overflow-x: auto;
             overflow-y: hidden;
             display: flex;
-            justify-content: space-between;
+            // justify-content: space-between;
 
             scrollbar-color: var(--primary-color) #000;
             scrollbar-width: thin;
@@ -223,6 +223,11 @@ body {
               .similar-image {
                 height: 100%;
                 object-fit: contain;
+                transition: linear 0.3s;
+
+                &:hover {
+                  filter: grayscale(20);
+                }
               }
             }
           }
