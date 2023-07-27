@@ -3,6 +3,7 @@ class UserData {
   #topTracks = "";
   #topArtists = "";
 
+  #accessToken;
   timeline;
 
   get getUserProfile() {
@@ -27,6 +28,14 @@ class UserData {
 
   set updateTopArtists(data) {
     this.#topArtists = data;
+  }
+
+  set updateAccessToken(token) {
+    this.#accessToken = token;
+  }
+
+  get getAccessToken() {
+    return this.#accessToken;
   }
 }
 

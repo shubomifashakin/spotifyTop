@@ -16,6 +16,42 @@ class Intro {
   introSectionArtistsBtn = document.querySelector(".intro-btn-2");
 
   constructor() {
+    document.addEventListener("dblclick", function () {
+      const targetSection = document.querySelector("target-section");
+
+      // Create a canvas element
+      const canvas = document.createElement("canvas");
+      canvas.width = targetSection.clientWidth;
+      canvas.height = targetSection.clientHeight;
+
+      // Get the canvas context
+      const ctx = canvas.getContext("2d");
+
+      // Draw the content of the target section on the canvas
+      ctx.drawImage(
+        targetSection,
+        0,
+        0,
+        targetSection.clientWidth,
+        targetSection.clientHeight
+      );
+
+      // Convert the canvas to a data URL (PNG format)
+      const dataURL = canvas.toDataURL("image/png");
+
+      // Create a download link
+      const downloadLink = document.createElement("a");
+      downloadLink.href = dataURL;
+      downloadLink.download = "downloaded_image.png"; // Change the filename as needed
+
+      // Append the link to the document and click it to trigger the download
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+
+      // Clean up: Remove the link from the document
+      document.body.removeChild(downloadLink);
+    });
+
     //when the user clicks the top tracks button
     this.introSectionTracksBtn.addEventListener(
       "click",
@@ -93,7 +129,7 @@ class Intro {
       function () {
         top1Section.audioEl.play();
       },
-      user.timeline ? 14000 : 3000
+      user.timeline ? 14000 : 2500
     );
 
     //animate the top1 section into view
@@ -169,25 +205,29 @@ class Intro {
         },
         "<"
       )
-      .from(top1Section.top1image, {
-        filter: "blur(20px)",
-        onComplete: async () => {
-          //get the most dominant color from the image
-          const newAltColor = await HELPERS.getMostDominantColor(imageUrl);
+      .from(
+        top1Section.top1image,
+        {
+          filter: "blur(20px)",
+          onComplete: async () => {
+            //get the most dominant color from the image
+            const newAltColor = await HELPERS.getMostDominantColor(imageUrl);
 
-          //turn it into an array
-          const altBgColor = newAltColor.split(",");
+            //turn it into an array
+            const altBgColor = newAltColor.split(",");
 
-          //display the alt bg and change the color to the set color
-          gsap.to(UserInterface.altBg, {
-            display: "block",
-            background: `rgb(${Math.round(altBgColor[0] * 0.45)},${Math.round(
-              altBgColor[0] * 0.45
-            )},${Math.round(altBgColor[0] * 0.4)})`,
-            opacity: 1,
-          });
+            //display the alt bg and change the color to the set color
+            gsap.to(UserInterface.altBg, {
+              display: "block",
+              background: `rgb(${Math.round(altBgColor[0] * 0.45)},${Math.round(
+                altBgColor[0] * 0.45
+              )},${Math.round(altBgColor[0] * 0.45)})`,
+              opacity: 1,
+            });
+          },
         },
-      });
+        "<"
+      );
 
     //clear the timeline stored in the userview
     user.timeline = "";

@@ -17,6 +17,8 @@ if (HELPERS.code && HELPERS.logged) {
   animate(UserInterface.spinner, { display: "block" });
 
   const accessToken = await getAccessToken(HELPERS.clientId, HELPERS.code);
+  //set the access token in the model
+  user.updateAccessToken = accessToken;
   const profile = await ACTIONS.fetchProfile(accessToken);
   const [topTracks, topArtists] = await ACTIONS.fetchTop(
     accessToken,

@@ -1,6 +1,7 @@
 import { gsap } from "gsap";
 import { top20Section } from "./_top20section";
 import { UserInterface } from "./_interface";
+import { user } from "../../_model";
 
 class Top1 {
   audioEl = document.querySelector(".audio-el");
@@ -16,33 +17,34 @@ class Top1 {
   top1ArtistName = document.querySelector(".info-artist-name");
   seeMoreTracks = document.querySelector(".see-more-tracks");
   seeMoreArtists = document.querySelector(".see-more-artists");
+  seeMore = document.querySelectorAll(".see-more");
 
   constructor() {
-    this.seeMoreTracks.addEventListener(
-      "click",
-      this.showTop20Tracks.bind(this)
-    );
+    this.seeMore.forEach((btn) => {
+      btn.addEventListener("click", this.showTop20.bind(this));
+    });
   }
 
-  showTop20Tracks(e) {
+  showTop20(e) {
     //pause the music playing
     this.audioEl.pause();
 
-    //go back to the previous background
-    //display the alt bg and change the color to the set color
-    gsap.to(UserInterface.altBg, {
-      opacity: 0,
-      display: "none",
-    });
+    //insert the data intro the top 20 section
+    top20Section.insertTop20Data(e.target.dataset.requestedData);
 
+    //change the color to the set color
     //animate the top 1 section out and animate the top 20 section in
     const timeline = gsap.timeline({
       defaults: { duration: 1, ease: "linear" },
     });
 
     timeline
+      .to(UserInterface.altBg, {
+        background: "#000",
+      })
       .to(this.top1section, { display: "none", opacity: 0 })
-      .to(top20Section.top20Container, { display: "flex", opacity: 1 });
+      .to(top20Section.top20Container, { display: "flex", opacity: 1 })
+      .fromTo(".col .top-item", { opacity: 0 }, { opacity: 1, stagger: 0.2 });
   }
 }
 

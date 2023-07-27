@@ -52,3 +52,28 @@ export async function fetchTop(token, time_range, amount) {
     throw err;
   }
 }
+
+export async function similarArtists(token, id) {
+  try {
+    const result = await fetch(
+      `https://api.spotify.com/v1/artists/${id}/related-artists `,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!result.ok) {
+      throw new Error(result.status);
+    }
+
+    const data = await result.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+
+    throw err;
+  }
+}
