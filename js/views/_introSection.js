@@ -5,6 +5,8 @@ import { openingSection } from "./_openSection";
 import { UserInterface } from "./_interface";
 import * as HELPERS from "../helpers/_helpers";
 import { gsap } from "gsap";
+import { similarArtists, similarSongs } from "../helpers/_actions";
+import { errorSection } from "./_errorSection";
 
 class Intro {
   introSection = document.querySelector(".intro");
@@ -16,52 +18,16 @@ class Intro {
   introSectionArtistsBtn = document.querySelector(".intro-btn-2");
 
   constructor() {
-    document.addEventListener("dblclick", function () {
-      const targetSection = document.querySelector("target-section");
-
-      // Create a canvas element
-      const canvas = document.createElement("canvas");
-      canvas.width = targetSection.clientWidth;
-      canvas.height = targetSection.clientHeight;
-
-      // Get the canvas context
-      const ctx = canvas.getContext("2d");
-
-      // Draw the content of the target section on the canvas
-      ctx.drawImage(
-        targetSection,
-        0,
-        0,
-        targetSection.clientWidth,
-        targetSection.clientHeight
-      );
-
-      // Convert the canvas to a data URL (PNG format)
-      const dataURL = canvas.toDataURL("image/png");
-
-      // Create a download link
-      const downloadLink = document.createElement("a");
-      downloadLink.href = dataURL;
-      downloadLink.download = "downloaded_image.png"; // Change the filename as needed
-
-      // Append the link to the document and click it to trigger the download
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-
-      // Clean up: Remove the link from the document
-      document.body.removeChild(downloadLink);
-    });
-
     //when the user clicks the top tracks button
     this.introSectionTracksBtn.addEventListener(
       "click",
-      this.seeTopTracks.bind(this)
+      this.seeTop.bind(this, "track")
     );
 
     //when the user clicks the top artists button on the intro section
     this.introSectionArtistsBtn.addEventListener(
       "click",
-      this.seeTopArtists.bind(this)
+      this.seeTop.bind(this, "artist")
     );
   }
 
@@ -80,6 +46,7 @@ class Intro {
     top1Section.top1AlbumName.textContent = albumName;
     top1Section.top1FromLabel.textContent = fromLabel;
     top1Section.top1image.src = imgSrc;
+    //if there is an audio src, it means we are showing tracks. so display fromArtists and the see more tracks btn. also hide the see more artists. (& vice versa)
     audSrc
       ? ((top1Section.top1FromArtist.style.display =
           top1Section.seeMoreTracks.style.display =
@@ -95,45 +62,28 @@ class Intro {
     top1Section.audioEl.pause();
   }
 
-  seeTopTracks() {
-    //if user is accessing the view from the opening section, there is a timeline to animate from
-    user.timeline ? this.comingFromIntro("track") : null;
+  //insertSimilarHtml
+  insertSimilarToError(similarData) {
+    console.log(similarData);
+    //clear the similar  container of previous html
+    UserInterface.errorRecommendations.innerHTML = "";
+    let html = "";
+    for (let x = 0; x < similarData.length; x++) {
+      const loopHtml = `<a href=${
+        similarData[x].external_urls.spotify
+      } class="rec-image-link">
+        <img src=${
+          similarData[x].images
+            ? similarData[x]?.images[0].url
+            : similarData[x].album.images[0].url
+        } class="recommendations-image" />
+      </a>`;
 
-    //if there is no user timeline, remove the top-20 section if it is there
-    top20Section.hideTop20Section();
+      html += loopHtml;
+    }
 
-    //get the requested data from model
-    const artistName = user.getTopTracks.items[0].artists[0].name;
-    const trackName = user.getTopTracks.items[0].name;
-    const albumName = user.getTopTracks.items[0].album.name;
-    const albumImageUrl = user.getTopTracks.items[0].album.images[0].url;
-    const previewUrl = user.getTopTracks.items[0].preview_url;
-
-    //show the nav left for the tracks section active
-    UserInterface.navbarLeftTracks.classList.add("active-left");
-    UserInterface.navbarLeftArtists.classList.remove("active-left");
-
-    //add the data to the html
-    this.parseToHtml(
-      "track",
-      trackName,
-      albumName,
-      "From",
-      albumImageUrl,
-      artistName,
-      previewUrl
-    );
-
-    //if there is a user timeline delay the playing of the audio by 14seconds to match with the display of the top 10
-    setTimeout(
-      function () {
-        top1Section.audioEl.play();
-      },
-      user.timeline ? 14000 : 2500
-    );
-
-    //animate the top1 section into view
-    this.animateTop1SectionToView(albumImageUrl);
+    //insert the similar data into the html
+    UserInterface.errorRecommendations.insertAdjacentHTML("beforeend", html);
   }
 
   //when the user clicks a button on the intro section
@@ -154,33 +104,91 @@ class Intro {
     openingSection.animateSectionIntro();
   }
 
-  seeTopArtists() {
-    //if user is accessing the view from the opening section, there is a timeline to animate from
-    user.timeline ? this.comingFromIntro("artist") : null;
+  async seeTop(request) {
+    const reqData = user[request + "s"].items;
 
-    //if there is no user timeline, remove the top-20 section if it is there
-    top20Section.hideTop20Section();
+    //if the user does not have any data
+    if (reqData.length < 1) {
+      const errHeader = `Opps! it looks like you haven't been very active.`;
 
-    //get the top artist data
-    const artistName = user.getTopArtists.items[0].name;
-    const artistImageUrl = user.getTopArtists.items[0].images[0].url;
-    const artistGenres = user.getTopArtists.items[0].genres.slice(0, 2);
+      const recHeader = `Here are some ${request}s you might like!`;
 
-    //show the navbarleft for artists
-    UserInterface.navbarLeftTracks.classList.remove("active-left");
-    UserInterface.navbarLeftArtists.classList.add("active-left");
+      //hide the intro section
+      gsap.to(this.introSection, { display: "none" });
 
-    //set the data in the html
-    this.parseToHtml(
-      "artist",
-      artistName,
-      artistGenres,
-      "Genres",
-      artistImageUrl
-    );
+      //show error section
+      errorSection.showErrorSection(errHeader, recHeader);
 
-    //animate the top 1 section to view
-    this.animateTop1SectionToView(artistImageUrl);
+      //get the similar tracks
+      const { tracks: similarTracks } = await similarSongs(user.getAccessToken);
+
+      const similarTracks6 = similarTracks.slice(0, 6);
+
+      //insert the similar data into the error section for recommendations
+      this.insertSimilarToError(similarTracks6);
+    } else {
+      //if user is accessing the view from the opening section, there is a timeline to animate from
+
+      // and if the user is accessing the view from the navbar click, remove the top-20 section if it is there
+      user.timeline
+        ? this.comingFromIntro(request)
+        : top20Section.hideTop20Section();
+
+      let imageUrl;
+      if (request === "artist") {
+        //get the top artist data
+        const artistName = reqData[0].name;
+        imageUrl = reqData[0].images[0].url;
+        const artistGenres = reqData[0].genres.slice(0, 2);
+
+        //show the navbarleft for artists
+        UserInterface.navbarLeftTracks.classList.remove("active-left");
+        UserInterface.navbarLeftArtists.classList.add("active-left");
+
+        //set the data in the html
+        this.parseToHtml(
+          "artist",
+          artistName,
+          artistGenres,
+          "Genres",
+          imageUrl
+        );
+      } else {
+        //get the requested data from model
+
+        const artistName = reqData[0].artists[0].name;
+        const trackName = reqData[0].name;
+        const albumName = reqData[0].album.name;
+        imageUrl = reqData[0].album.images[0].url;
+        const previewUrl = reqData[0].preview_url;
+
+        //show the nav left for the tracks section active
+        UserInterface.navbarLeftTracks.classList.add("active-left");
+        UserInterface.navbarLeftArtists.classList.remove("active-left");
+
+        //add the data to the html
+        this.parseToHtml(
+          "track",
+          trackName,
+          albumName,
+          "From",
+          imageUrl,
+          artistName,
+          previewUrl
+        );
+
+        //if we are coming from the opening seciton, delay the playing of the audio by 14 seconds so that it starts when the animation has finished. if there isn't play after 2.5seconds
+        setTimeout(
+          function () {
+            top1Section.audioEl.play();
+          },
+          user.timeline ? 14000 : 2500
+        );
+      }
+
+      //animate the top 1 section to view
+      this.animateTop1SectionToView(imageUrl);
+    }
   }
 
   //it animates the top1 section into view
@@ -209,28 +217,27 @@ class Intro {
         top1Section.top1image,
         {
           filter: "blur(20px)",
-          onComplete: async () => {
-            //get the most dominant color from the image
-            const newAltColor = await HELPERS.getMostDominantColor(imageUrl);
-
-            //turn it into an array
-            const altBgColor = newAltColor.split(",");
-
-            //display the alt bg and change the color to the set color
-            gsap.to(UserInterface.altBg, {
-              display: "block",
-              background: `rgb(${Math.round(altBgColor[0] * 0.45)},${Math.round(
-                altBgColor[0] * 0.45
-              )},${Math.round(altBgColor[0] * 0.45)})`,
-              opacity: 1,
-            });
-          },
         },
         "<"
       );
 
     //clear the timeline stored in the userview
     user.timeline = "";
+  }
+
+  animateIntroSectionToView(timeline) {
+    timeline
+      .to(introSection.introSection, { display: "flex", delay: 1 })
+      .to(introSection.introSectionHead, {
+        opacity: 1,
+        onUpdate: () => {
+          //show the users username
+          introSection.introSectionUsername.textContent =
+            user.getUserProfile.display_name;
+        },
+      })
+      .to(introSection.introSectionLead, { opacity: 1 })
+      .to(introSection.introSectionBtnsCont, { opacity: 1 });
   }
 }
 

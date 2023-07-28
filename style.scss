@@ -5,7 +5,7 @@
   margin: 0;
   font-size: 16px;
   font-family: "Poppins", monospace;
-  --bg-color: #1a1b41;
+  --bg-color: #000;
   --hover-color: #baff29;
   --primary-color: #fff;
   --top-item-color: #000;
@@ -196,7 +196,7 @@ body {
             overflow-x: auto;
             overflow-y: hidden;
             display: flex;
-            // justify-content: space-between;
+            justify-content: flex-start;
 
             scrollbar-color: var(--primary-color) #000;
             scrollbar-width: thin;
@@ -219,6 +219,7 @@ body {
             .similar-data {
               margin-right: 0.5rem;
               box-sizing: border-box;
+              max-width: 150px;
 
               .similar-image {
                 height: 100%;
@@ -244,7 +245,7 @@ body {
       }
 
       .focus-data {
-        font-size: 1.25rem;
+        font-size: 1rem;
         color: var(--primary-color);
       }
     }
@@ -276,7 +277,6 @@ body {
         width: 100%;
         height: 7rem;
         border-radius: 10px;
-        border: solid 1px var(--top-item-color);
         display: flex;
         padding: 0.35rem;
         box-sizing: border-box;
@@ -572,6 +572,77 @@ body {
       & > * {
         font-size: inherit;
         color: inherit;
+      }
+    }
+  }
+
+  .error-section {
+    display: none;
+    width: 50%;
+    text-align: center;
+    box-sizing: border-box;
+
+    .error-message {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .error-recommendations {
+      height: 15rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+      padding: 0 0.5rem;
+
+      .recommendations-header {
+        color: var(--hover-color);
+        font-size: 1.25rem;
+        height: 15%;
+      }
+
+      .inner-recommendations {
+        height: 82%;
+        width: 100%;
+        box-sizing: border-box;
+
+        .recommendations {
+          height: 100%;
+          overflow-x: auto;
+          overflow-y: hidden;
+          display: flex;
+          justify-content: flex-start;
+
+          .rec-image-link {
+            height: 100%;
+            object-fit: cover;
+            margin-right: 0.5rem;
+
+            .recommendations-image {
+              height: 100%;
+              object-fit: cover;
+              transition: linear 0.3s;
+
+              &:hover {
+                filter: grayscale(20);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .error-return {
+      font-size: 0.75rem;
+      text-align: center;
+      color: darken($color: #fff, $amount: 5);
+      transition: linear 0.3s;
+
+      &:hover {
+        color: darken($color: #fff, $amount: 25);
       }
     }
   }

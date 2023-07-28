@@ -39,9 +39,6 @@ class Top1 {
     });
 
     timeline
-      .to(UserInterface.altBg, {
-        background: "#000",
-      })
       .to(this.top1section, { display: "none", opacity: 0 })
       .to(top20Section.top20Container, { display: "flex", opacity: 1 })
       .fromTo(".col .top-item", { opacity: 0 }, { opacity: 1, stagger: 0.2 });

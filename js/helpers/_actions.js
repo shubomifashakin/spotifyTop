@@ -13,7 +13,6 @@ export async function fetchProfile(token) {
     const data = await result.json();
     return data;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -42,13 +41,18 @@ export async function fetchTop(token, time_range, amount) {
       ),
     ]);
 
+    if (!result[0].ok && !result[1].ok) {
+      throw new Error(
+        `Something went wrong ${result[0].status && result[1].status}`
+      );
+    }
+
     const [tracks, artists] = result;
     const tracksData = await tracks.json();
     const artistsData = await artists.json();
     // console.log(tracksData);
     return [tracksData, artistsData];
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -72,33 +76,66 @@ export async function similarArtists(token, id) {
     const data = await result.json();
     return data;
   } catch (err) {
-    console.log(err);
-
     throw err;
   }
 }
 
 export async function similarSongs(token, trackId) {
   try {
-    const result = await fetch(
-      `https://api.spotify.com/v1/recommendations?seed_tracks=${trackId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    let result;
+    if (!trackId) {
+      //if the user hasnt used spotify in a while, recommend random songs for them to listen to
+      const fetchAllGenres = await fetch(
+        `https://api.spotify.com/v1/recommendations/available-genre-seeds`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const { genres: allGenres } = await fetchAllGenres.json();
+
+      const arr = [
+        Math.trunc(Math.random() * 4) + 1,
+        Math.trunc(Math.random() * 3),
+      ];
+      const genreStart = Math.min(...arr);
+      const genreEnd = Math.max(...arr);
+
+      const recommendableGenres = allGenres.slice(genreStart, genreEnd);
+      const allGenresString = recommendableGenres.join(",");
+
+      result = await fetch(
+        `https://api.spotify.com/v1/recommendations?seed_genres=${allGenresString}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } else {
+      result = await fetch(
+        `https://api.spotify.com/v1/recommendations?seed_tracks=${trackId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    }
 
     if (!result.ok) {
       throw new Error(result.status);
     }
 
     const data = await result.json();
+    console.log(data);
     return data;
   } catch (err) {
-    console.log(err);
-
     throw err;
   }
 }

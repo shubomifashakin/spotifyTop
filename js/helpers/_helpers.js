@@ -1,7 +1,7 @@
 export function timer() {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
-      return reject(new Error("Request took too long"));
+      return reject(new Error("Request took too long. Please try again"));
     }, 10000);
   });
 }

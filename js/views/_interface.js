@@ -1,6 +1,8 @@
 import * as HELPERS from "../helpers/_helpers";
+import { gsap } from "gsap";
 import * as AUTH from "../helpers/_auth";
 import { introSection } from "./_introSection";
+import { user } from "../../_model";
 
 class UI {
   innerApp = document.querySelector("#app");
@@ -14,6 +16,12 @@ class UI {
   navbarLeftArtists = document.querySelector(".nav-left-artist");
   navbarUsername = document.querySelector(".nav-username");
   topContainer = document.querySelector(".top-container");
+
+  errorSection = document.querySelector(".error-section");
+  errorMessageSect = document.querySelector(".error-message");
+  errorRecommendations = document.querySelector(".recommendations");
+  errorRecHeader = document.querySelector(".recommendations-header");
+  errorReturnLink = document.querySelector(".error-return");
   footer = document.querySelector(".app-footer");
 
   constructor() {
@@ -24,12 +32,15 @@ class UI {
   }
 
   navbarEventCb(e) {
+    //if the user clicked the top top tracks or top artists link on the navbar.
     if (e.target.classList.contains("nav-left-link")) {
       console.log(e.target.dataset.targetSection);
       e.target.dataset.targetSection === "topTracks"
-        ? introSection.seeTopTracks()
-        : introSection.seeTopArtists();
-    } else if (e.target.classList.contains("nav-log-out")) {
+        ? introSection.seeTop("track")
+        : introSection.seeTop("artist");
+    }
+    //if the user clicked the log out button on the navbar
+    else if (e.target.classList.contains("nav-log-out")) {
       location.reload();
     }
   }

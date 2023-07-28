@@ -178,11 +178,11 @@ class top20 {
   //inserts the top 20 data into the top 20 section html
   insertTop20Data(dataRequested) {
     if (dataRequested === "all-tracks") {
-      let dataReq = user.getTopTracks.items;
+      let dataReq = user.tracks.items;
 
       this.parseTop20DataToHtml(dataReq, "Track");
     } else {
-      let dataReq = user.getTopArtists.items;
+      let dataReq = user.artists.items;
 
       this.parseTop20DataToHtml(dataReq, "Artist");
     }

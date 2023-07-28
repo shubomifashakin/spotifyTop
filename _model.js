@@ -10,11 +10,11 @@ class UserData {
     return this.#userProfile;
   }
 
-  get getTopTracks() {
+  get tracks() {
     return this.#topTracks;
   }
 
-  get getTopArtists() {
+  get artists() {
     return this.#topArtists;
   }
 
