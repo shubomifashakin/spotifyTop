@@ -72,7 +72,7 @@ export async function getAccessToken(clientId, code) {
   //sets the request code to the code we generated
   params.append("code", code);
   //this is the site our request redirects to after weve been authorized
-  params.append("redirect_uri", "http://localhost:5173/");
+  params.append("redirect_uri", "https://545spotifystats.netlify.app/");
   //this is the verifier we generated
   params.append("code_verifier", verifier);
 
