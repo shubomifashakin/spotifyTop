@@ -8,47 +8,53 @@ import { gsap } from "gsap";
 import { introSection } from "./js/views/_introSection";
 import { errorSection } from "./js/views/_errorSection";
 
-//if there is no code in the url, redirect to authorization
-if (HELPERS.code && HELPERS.logged) {
-  //removes the logged value from the local storage
-  localStorage.removeItem("logged");
+import "regenerator-runtime/runtime.js";
 
-  //hide the button
-  animate(UserInterface.logInSection, { opacity: 0, display: "none" });
+async function LoadSite() {
+  //if there is no code in the url, redirect to authorization
+  if (HELPERS.code && HELPERS.logged) {
+    //removes the logged value from the local storage
+    localStorage.removeItem("logged");
 
-  //add the loading spinner
-  animate(UserInterface.spinner, { display: "block" });
-  try {
-    const accessToken = await getAccessToken(HELPERS.clientId, HELPERS.code);
-    //set the access token in the model
-    user.updateAccessToken = accessToken;
-    const profile = await ACTIONS.fetchProfile(accessToken);
-    const [topTracks, topArtists] = await ACTIONS.fetchTop(
-      accessToken,
-      HELPERS.timeFrame,
-      HELPERS.dataLimit
-    );
+    //hide the button
+    animate(UserInterface.logInSection, { opacity: 0, display: "none" });
 
-    //remove the spinner
-    animate(UserInterface.spinner, { display: "none" });
-    //set the users data in the model
-    user.updateTopArtists = topArtists;
-    user.updateTopTracks = topTracks;
-    user.updateUserProfile = profile;
+    //add the loading spinner
+    animate(UserInterface.spinner, { display: "block" });
+    try {
+      const accessToken = await getAccessToken(HELPERS.clientId, HELPERS.code);
+      //set the access token in the model
+      user.updateAccessToken = accessToken;
+      const profile = await ACTIONS.fetchProfile(accessToken);
+      const [topTracks, topArtists] = await ACTIONS.fetchTop(
+        accessToken,
+        HELPERS.timeFrame,
+        HELPERS.dataLimit
+      );
 
-    //show the intro or greeting section
-    console.log(user.tracks);
-    console.log(user.artists);
-    console.log(user.getUserProfile);
-    const timeline = gsap.timeline({ defaults: { duration: 1 } });
+      //remove the spinner
+      animate(UserInterface.spinner, { display: "none" });
+      //set the users data in the model
+      user.updateTopArtists = topArtists;
+      user.updateTopTracks = topTracks;
+      user.updateUserProfile = profile;
 
-    //animate the intro section to view
-    introSection.animateIntroSectionToView(timeline);
-    //set the timeline in the model so it can be accessible anywhere
-    user.timeline = timeline;
-  } catch (err) {
-    //remove spinner & display the error section
-    animate(UserInterface.spinner, { display: "none" });
-    errorSection.showErrorSection(err);
+      //show the intro or greeting section
+      console.log(user.tracks);
+      console.log(user.artists);
+      console.log(user.getUserProfile);
+      const timeline = gsap.timeline({ defaults: { duration: 1 } });
+
+      //animate the intro section to view
+      introSection.animateIntroSectionToView(timeline);
+      //set the timeline in the model so it can be accessible anywhere
+      user.timeline = timeline;
+    } catch (err) {
+      //remove spinner & display the error section
+      animate(UserInterface.spinner, { display: "none" });
+      errorSection.showErrorSection(err);
+    }
   }
 }
+
+LoadSite();
