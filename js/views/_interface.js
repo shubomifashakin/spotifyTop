@@ -23,6 +23,7 @@ class UI {
   errorRecHeader = document.querySelector(".recommendations-header");
   errorReturnLink = document.querySelector(".error-return");
   footer = document.querySelector(".app-footer");
+  footerCurrentlyPlaying = document.querySelector(".currently");
 
   constructor() {
     //when the user clicks the log in btn they go to the auth

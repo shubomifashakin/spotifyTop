@@ -7,6 +7,7 @@ import * as HELPERS from "../helpers/_helpers";
 import { gsap } from "gsap";
 import { similarArtists, similarSongs } from "../helpers/_actions";
 import { errorSection } from "./_errorSection";
+import { MobileView } from "./_mobile";
 
 class Intro {
   introSection = document.querySelector(".intro");
@@ -105,6 +106,7 @@ class Intro {
   }
 
   async seeTop(request) {
+    MobileView.mobileInnerSection.innerHTML = "";
     const reqData = user[request + "s"].items;
 
     //if the user does not have any data
@@ -213,11 +215,12 @@ class Intro {
         },
         "<"
       )
-      .from(
+      .fromTo(
         top1Section.top1image,
         {
           filter: "blur(20px)",
         },
+        { filter: "blur(0)" },
         "<"
       );
 
@@ -227,17 +230,17 @@ class Intro {
 
   animateIntroSectionToView(timeline) {
     timeline
-      .to(introSection.introSection, { display: "flex", delay: 1 })
-      .to(introSection.introSectionHead, {
+      .to(this.introSection, { display: "flex", delay: 1 })
+      .to(this.introSectionHead, {
         opacity: 1,
         onUpdate: () => {
           //show the users username
-          introSection.introSectionUsername.textContent =
+          this.introSectionUsername.textContent =
             user.getUserProfile.display_name;
         },
       })
-      .to(introSection.introSectionLead, { opacity: 1 })
-      .to(introSection.introSectionBtnsCont, { opacity: 1 });
+      .to(this.introSectionLead, { opacity: 1 })
+      .to(this.introSectionBtnsCont, { opacity: 1 });
   }
 }
 

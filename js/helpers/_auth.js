@@ -1,9 +1,9 @@
 import * as HELPERS from "./_helpers";
 
 export async function redirectToAuthCodeFlow(clientId) {
-  //this geberates a verifier
+  //this generates a verifier
   const verifier = generateCodeVerifier(128);
-  //if generates a challenge
+  //it generates a challenge
   const challenge = await generateCodeChallenge(verifier);
 
   //it sets the verifier in our localstorage
@@ -18,7 +18,7 @@ export async function redirectToAuthCodeFlow(clientId) {
   //these are the scopes we want to access
   params.append(
     "scope",
-    "user-read-private user-read-email user-top-read user-follow-read"
+    "user-read-private user-read-email user-top-read user-follow-read user-read-currently-playing"
   );
   params.append("code_challenge_method", "S256");
   params.append("code_challenge", challenge);

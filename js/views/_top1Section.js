@@ -2,6 +2,7 @@ import { gsap } from "gsap";
 import { top20Section } from "./_top20section";
 import { UserInterface } from "./_interface";
 import { user } from "../../_model";
+import { MobileView } from "./_mobile";
 
 class Top1 {
   audioEl = document.querySelector(".audio-el");
@@ -27,10 +28,17 @@ class Top1 {
 
   showTop20(e) {
     //pause the music playing
+
     this.audioEl.pause();
 
     //insert the data intro the top 20 section
     top20Section.insertTop20Data(e.target.dataset.requestedData);
+    // gsap.to(MobileView.mobileSection, { display: "none" });
+
+    //insert the data into the mobile view
+    setTimeout(function () {
+      MobileView.insertMobileTop20Data(e.target.dataset.requestedData);
+    }, 1500);
 
     //change the color to the set color
     //animate the top 1 section out and animate the top 20 section in

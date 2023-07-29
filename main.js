@@ -3,7 +3,7 @@ import * as HELPERS from "./js/helpers/_helpers";
 import * as ACTIONS from "./js/helpers/_actions";
 import { getAccessToken } from "./js/helpers/_auth";
 import { user } from "./_model";
-import { animate, timeline } from "motion";
+import { animate } from "motion";
 import { gsap } from "gsap";
 import { introSection } from "./js/views/_introSection";
 import { errorSection } from "./js/views/_errorSection";
@@ -15,6 +15,8 @@ if (HELPERS.code && HELPERS.logged) {
 
   //hide the button
   animate(UserInterface.logInSection, { opacity: 0, display: "none" });
+
+  //add the loading spinner
   animate(UserInterface.spinner, { display: "block" });
   try {
     const accessToken = await getAccessToken(HELPERS.clientId, HELPERS.code);
