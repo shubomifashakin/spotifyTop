@@ -218,9 +218,9 @@ class Intro {
       .fromTo(
         top1Section.top1image,
         {
-          filter: "blur(20px)",
+          filter: "blur(5px)",
         },
-        { filter: "blur(0)" },
+        { filter: "blur(0px)" },
         "<"
       );
 

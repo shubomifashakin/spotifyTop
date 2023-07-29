@@ -791,6 +791,15 @@ body {
     display: flex !important;
     flex-direction: column;
   }
+  .error-section {
+    width: 100% !important;
+  }
+  .error-section .error-message {
+    font-size: 0.85rem !important;
+  }
+  .error-section .error-recommendations .recommendations-header {
+    font-size: 1rem !important;
+  }
 }
 @media only screen and (min-width: 1600px) and (min-height: 900px) {
   .navbar .nav-item > * {
