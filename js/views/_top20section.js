@@ -54,7 +54,6 @@ class top20 {
       //the item clicked
       const elClicked = e.target.closest(".top-item");
       const typeOfRequest = elClicked.dataset.label;
-      console.log(elClicked, typeOfRequest);
 
       //remove the focused class from every item
       this.removeFocusClassFromAllItems();
@@ -95,7 +94,6 @@ class top20 {
 
       //get the similar artists from spotify
       const requestId = elClicked.dataset.requestId;
-      console.log(requestId);
 
       const similarData = await this.handleSimilarData(
         requestId,
@@ -154,7 +152,6 @@ class top20 {
 
   //insertSimilarHtml
   insertSimilarHtml(similarData) {
-    console.log(similarData);
     //clear the similar  container of previous html
     this.focusSimilarInnerOverflowCont.innerHTML = "";
     let html = "";

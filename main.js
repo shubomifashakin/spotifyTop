@@ -40,9 +40,7 @@ async function LoadSite() {
       user.updateUserProfile = profile;
 
       //show the intro or greeting section
-      console.log(user.tracks);
-      console.log(user.artists);
-      console.log(user.getUserProfile);
+
       const timeline = gsap.timeline({ defaults: { duration: 1 } });
 
       //animate the intro section to view

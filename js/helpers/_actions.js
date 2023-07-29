@@ -133,7 +133,6 @@ export async function similarSongs(token, trackId) {
     }
 
     const data = await result.json();
-    console.log(data);
     return data;
   } catch (err) {
     throw err;

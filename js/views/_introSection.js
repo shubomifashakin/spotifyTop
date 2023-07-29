@@ -65,7 +65,6 @@ class Intro {
 
   //insertSimilarHtml
   insertSimilarToError(similarData) {
-    console.log(similarData);
     //clear the similar  container of previous html
     UserInterface.errorRecommendations.innerHTML = "";
     let html = "";

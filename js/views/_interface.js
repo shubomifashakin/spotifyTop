@@ -35,7 +35,6 @@ class UI {
   navbarEventCb(e) {
     //if the user clicked the top top tracks or top artists link on the navbar.
     if (e.target.classList.contains("nav-left-link")) {
-      console.log(e.target.dataset.targetSection);
       e.target.dataset.targetSection === "topTracks"
         ? introSection.seeTop("track")
         : introSection.seeTop("artist");
