@@ -214,14 +214,6 @@ class Intro {
           opacity: 1,
         },
         "<"
-      )
-      .fromTo(
-        top1Section.top1image,
-        {
-          filter: "blur(5px)",
-        },
-        { filter: "blur(0px)" },
-        "<"
       );
 
     //clear the timeline stored in the userview
