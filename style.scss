@@ -133,24 +133,12 @@ body {
             display: flex;
             justify-content: center;
             position: relative;
+            background-color: #000;
 
             .mobile-image {
               height: 100%;
               width: 100%;
-              object-fit: cover;
-            }
-
-            .mobile-top-no {
-              position: absolute;
-              top: 5%;
-              right: 5%;
-              width: 20px;
-              height: 20px;
-              font-size: 0.85rem;
-              color: var(--top-item-color);
-              text-align: center;
-              background-color: var(--hover-color);
-              border-radius: 50%;
+              object-fit: contain;
             }
           }
 
@@ -163,13 +151,35 @@ body {
             .detail {
               .mobile-top-label {
                 font-size: 0.5rem;
+                display: flex;
+                justify-content: space-between;
                 color: darken($color: #fff, $amount: 80);
+
+                .mobile-top-no {
+                  font-size: inherit !important;
+                  text-align: right;
+                  color: var(--top-item-color);
+                  text-align: center;
+                  background-color: var(--hover-color);
+                  border-radius: 50%;
+                }
               }
 
               .mobile-top-data {
                 font-size: 0.65rem;
                 font-weight: 700;
                 color: var(--top-item-color);
+
+                .mobile-top-data-link {
+                  color: inherit;
+                  font-weight: inherit;
+                  font-size: inherit;
+
+                  .spotify-icon {
+                    margin-left: 0.25rem;
+                    font-size: inherit;
+                  }
+                }
               }
             }
           }
@@ -227,6 +237,27 @@ body {
         .info-detail {
           color: var(--primary-color);
           font-size: 3rem;
+          transition: linear 0.3s;
+
+          & > * {
+            font-size: inherit !important;
+            color: inherit !important;
+            text-decoration: none;
+
+            & > * {
+              font-size: inherit !important;
+              color: inherit !important;
+            }
+          }
+        }
+
+        .info-top-name {
+          text-decoration: underline;
+          display: inline-block;
+        }
+
+        .info-top-name:hover {
+          color: var(--hover-color);
         }
       }
 
@@ -522,6 +553,17 @@ body {
               font-size: 0.8rem;
               font-weight: 700;
               word-wrap: break-word;
+
+              .top-data-link {
+                text-decoration: underline;
+                color: inherit;
+                font-size: inherit;
+
+                .spotify-icon {
+                  margin-left: 0.25rem;
+                  font-size: 0.75rem;
+                }
+              }
             }
           }
         }
@@ -902,6 +944,16 @@ body {
 
         .info-detail {
           font-size: 1.25rem !important;
+
+          & > * {
+            font-size: inherit !important;
+            color: inherit !important;
+
+            & > * {
+              font-size: inherit !important;
+              color: inherit !important;
+            }
+          }
         }
       }
     }
@@ -957,6 +1009,16 @@ body {
 
         .info-detail {
           font-size: 4rem !important;
+
+          & > * {
+            font-size: inherit !important;
+            color: inherit !important;
+
+            & > * {
+              font-size: inherit !important;
+              color: inherit !important;
+            }
+          }
         }
 
         .info-head {

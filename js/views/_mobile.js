@@ -33,14 +33,20 @@ class MobileV {
               : dataReq[x].images[0].url
           } class="mobile-image" />
     
-          <p class="mobile-top-no">${x + 1}</p>
+      
         </div>
     
         <div class="mobile-top-details">
           <span class="detail detail-1">
-            <p class="mobile-top-label">${label}</p>
+            <p class="mobile-top-label">${label}    <span class="mobile-top-no">${
+        x + 1
+      }</span></p>
             <p class="mobile-top-data">
-            ${dataReq[x].name}
+           <a href=${
+             dataReq[x].external_urls.spotify
+           } class="mobile-top-data-link"> ${
+        dataReq[x].name
+      }<i class="fa-brands fa-spotify spotify-icon"></i></a>
             </p>
           </span>
     
@@ -65,14 +71,20 @@ class MobileV {
               : dataReq[x + 1].images[0].url
           }  class="mobile-image" />
     
-          <p class="mobile-top-no">${x + 2}</p>
+   
         </div>
     
         <div class="mobile-top-details">
           <span class="detail detail-1">
-            <p class="mobile-top-label"> ${label}</p>
+            <p class="mobile-top-label"> ${label} <span class="mobile-top-no">${
+        x + 2
+      }</span></p>
             <p class="mobile-top-data">
-            ${dataReq[x + 1].name}
+            <a href=${
+              dataReq[x + 1].external_urls.spotify
+            } class="mobile-top-data-link"> ${
+        dataReq[x + 1].name
+      }<i class="fa-brands fa-spotify spotify-icon"></i></a>
             </p>
           </span>
     
@@ -102,14 +114,19 @@ class MobileV {
             : dataReq[x + 2].images[0].url
         } class="mobile-image" />
   
-        <p class="mobile-top-no">${x + 3}</p>
       </div>
   
       <div class="mobile-top-details">
         <span class="detail detail-1">
-          <p class="mobile-top-label">${label}</p>
+          <p class="mobile-top-label">${label}       <span class="mobile-top-no">${
+              x + 3
+            }</span></p>
           <p class="mobile-top-data">
-          ${dataReq[x + 2].name}
+          <a href=${
+            dataReq[x + 2].external_urls.spotify
+          } class="mobile-top-data-link"> ${
+              dataReq[x + 2].name
+            }<i class="fa-brands fa-spotify spotify-icon"></i></a>
           </p>
         </span>
   

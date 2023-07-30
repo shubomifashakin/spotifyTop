@@ -125,24 +125,13 @@ body {
   display: flex;
   justify-content: center;
   position: relative;
+  background-color: #000;
 }
 .top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-image-container .mobile-image {
   height: 100%;
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-image-container .mobile-top-no {
-  position: absolute;
-  top: 5%;
-  right: 5%;
-  width: 20px;
-  height: 20px;
-  font-size: 0.85rem;
-  color: var(--top-item-color);
-  text-align: center;
-  background-color: var(--hover-color);
-  border-radius: 50%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 .top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-details {
   padding: 0 0.25rem;
@@ -152,12 +141,31 @@ body {
 }
 .top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-details .detail .mobile-top-label {
   font-size: 0.5rem;
+  display: flex;
+  justify-content: space-between;
   color: #333333;
+}
+.top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-details .detail .mobile-top-label .mobile-top-no {
+  font-size: inherit !important;
+  text-align: right;
+  color: var(--top-item-color);
+  text-align: center;
+  background-color: var(--hover-color);
+  border-radius: 50%;
 }
 .top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-details .detail .mobile-top-data {
   font-size: 0.65rem;
   font-weight: 700;
   color: var(--top-item-color);
+}
+.top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-details .detail .mobile-top-data .mobile-top-data-link {
+  color: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+.top-container .top-20-mobile .top-20-mobile-inner .mobile-col .mobile-top-item .mobile-top-details .detail .mobile-top-data .mobile-top-data-link .spotify-icon {
+  margin-left: 0.25rem;
+  font-size: inherit;
 }
 .top-container .top-20-mobile .top-20-mobile-inner .mobile-col-7 {
   justify-content: space-around;
@@ -202,6 +210,23 @@ body {
 .top-container .top-1-section .top-right .track-info .info-detail {
   color: var(--primary-color);
   font-size: 3rem;
+  transition: linear 0.3s;
+}
+.top-container .top-1-section .top-right .track-info .info-detail > * {
+  font-size: inherit !important;
+  color: inherit !important;
+  text-decoration: none;
+}
+.top-container .top-1-section .top-right .track-info .info-detail > * > * {
+  font-size: inherit !important;
+  color: inherit !important;
+}
+.top-container .top-1-section .top-right .track-info .info-top-name {
+  text-decoration: underline;
+  display: inline-block;
+}
+.top-container .top-1-section .top-right .track-info .info-top-name:hover {
+  color: var(--hover-color);
 }
 .top-container .top-1-section .top-right .see-more {
   font-size: 0.85rem;
@@ -455,6 +480,15 @@ body {
   font-size: 0.8rem;
   font-weight: 700;
   word-wrap: break-word;
+}
+.top-container .top-20 .col .top-item .top-item-inner .top-item-details .top-data .top-data-link {
+  text-decoration: underline;
+  color: inherit;
+  font-size: inherit;
+}
+.top-container .top-20 .col .top-item .top-item-inner .top-item-details .top-data .top-data-link .spotify-icon {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
 }
 
 .app-footer {
@@ -775,6 +809,14 @@ body {
   .top-1-section .top-right .track-info .info-detail {
     font-size: 1.25rem !important;
   }
+  .top-1-section .top-right .track-info .info-detail > * {
+    font-size: inherit !important;
+    color: inherit !important;
+  }
+  .top-1-section .top-right .track-info .info-detail > * > * {
+    font-size: inherit !important;
+    color: inherit !important;
+  }
   .app-footer {
     padding: 0 1rem !important;
   }
@@ -810,6 +852,14 @@ body {
   }
   .top-1-section .top-right .track-info .info-detail {
     font-size: 4rem !important;
+  }
+  .top-1-section .top-right .track-info .info-detail > * {
+    font-size: inherit !important;
+    color: inherit !important;
+  }
+  .top-1-section .top-right .track-info .info-detail > * > * {
+    font-size: inherit !important;
+    color: inherit !important;
   }
   .top-1-section .top-right .track-info .info-head {
     font-size: 1.5rem !important;

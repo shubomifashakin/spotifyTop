@@ -45,7 +45,7 @@ class top20 {
       //if there is a timeline when a non child is clicked, reverse the timeline, if there isnt do nothing
       this.timeLine ? this.timeLine.reverse() : null;
 
-      //clear the similar  container of previous html
+      //remove the html from the previous similar container
       this.focusSimilarInnerOverflowCont.innerHTML = "";
 
       //remove the focused class from focused items
@@ -216,7 +216,11 @@ class top20 {
 
                 <p class="top-item-no">${x + 1}</p>
             </div>
-              <p class="top-data top-data-1">${dataReq[x].name}</p></span
+              <p class="top-data top-data-1"><a href="${
+                dataReq[x].external_urls.spotify
+              }" class="top-data-link">${
+        dataReq[x].name
+      }<i class="fa-brands fa-spotify spotify-icon"></i></a></p></span
             >
 
             <span class="detail">
@@ -255,7 +259,11 @@ class top20 {
 
                     <p class="top-item-no">${x + 2}</p>
                 </div>
-              <p class="top-data top-data-1">${dataReq[x + 1].name}</p></span
+              <p class="top-data top-data-1"><a href="${
+                dataReq[x + 1].external_urls.spotify
+              }" class="top-data-link">${
+        dataReq[x + 1].name
+      }<i class="fa-brands fa-spotify spotify-icon"></i></a></p></span
             >
 
             <span class="detail">
@@ -294,7 +302,11 @@ class top20 {
 
             <p class="top-item-no">${x + 3}</p>
         </div>
-              <p class="top-data top-data-1">${dataReq[x + 2].name}</p></span
+              <p class="top-data top-data-1"><a href="${
+                dataReq[x + 2].external_urls.spotify
+              }" class="top-data-link">${
+        dataReq[x + 2].name
+      }<i class="fa-brands fa-spotify spotify-icon"></i></a></p></span
             >
 
             <span class="detail">
@@ -333,7 +345,11 @@ class top20 {
 
                     <p class="top-item-no">${x + 4}</p>
                 </div>
-                <p class="top-data top-data-1">${dataReq[x + 3].name}</p>
+                <p class="top-data top-data-1"><a href="${
+                  dataReq[x + 3].external_urls.spotify
+                }" class="top-data-link">${
+        dataReq[x + 3].name
+      }<i class="fa-brands fa-spotify spotify-icon"></i></a></p>
               </span>
 
             <span class="detail">

@@ -39,11 +39,14 @@ class Intro {
     fromLabel,
     imgSrc,
     artistName,
-    audSrc
+    audSrc,
+    reqLink
   ) {
+    console.log(reqLink);
     top1Section.requestedDataLabel.textContent = requestedData;
     top1Section.top1section.classList.add(`${requestedData}s-active`);
     top1Section.top1Name.textContent = topName;
+    top1Section.top1NameLink.href = reqLink;
     top1Section.top1AlbumName.textContent = albumName;
     top1Section.top1FromLabel.textContent = fromLabel;
     top1Section.top1image.src = imgSrc;
@@ -106,6 +109,7 @@ class Intro {
 
   async seeTop(request) {
     MobileView.mobileInnerSection.innerHTML = "";
+    //get the requested data from the model
     const reqData = user[request + "s"].items;
 
     //if the user does not have any data
@@ -117,9 +121,6 @@ class Intro {
       //hide the intro section
       gsap.to(this.introSection, { display: "none" });
 
-      //show error section
-      errorSection.showErrorSection(errHeader, recHeader);
-
       //get the similar tracks
       const { tracks: similarTracks } = await similarSongs(user.getAccessToken);
 
@@ -127,6 +128,9 @@ class Intro {
 
       //insert the similar data into the error section for recommendations
       this.insertSimilarToError(similarTracks6);
+
+      //show the error section
+      errorSection.showErrorSection(errHeader, recHeader);
     } else {
       //if user is accessing the view from the opening section, there is a timeline to animate from
 
@@ -141,6 +145,7 @@ class Intro {
         const artistName = reqData[0].name;
         imageUrl = reqData[0].images[0].url;
         const artistGenres = reqData[0].genres.slice(0, 2);
+        const reqLink = reqData[0].external_urls.spotify;
 
         //show the navbarleft for artists
         UserInterface.navbarLeftTracks.classList.remove("active-left");
@@ -152,7 +157,10 @@ class Intro {
           artistName,
           artistGenres,
           "Genres",
-          imageUrl
+          imageUrl,
+          undefined,
+          undefined,
+          reqLink
         );
       } else {
         //get the requested data from model
@@ -162,6 +170,7 @@ class Intro {
         const albumName = reqData[0].album.name;
         imageUrl = reqData[0].album.images[0].url;
         const previewUrl = reqData[0].preview_url;
+        const reqLink = reqData[0].external_urls.spotify;
 
         //show the nav left for the tracks section active
         UserInterface.navbarLeftTracks.classList.add("active-left");
@@ -175,7 +184,8 @@ class Intro {
           "From",
           imageUrl,
           artistName,
-          previewUrl
+          previewUrl,
+          reqLink
         );
 
         //if we are coming from the opening seciton, delay the playing of the audio by 14 seconds so that it starts when the animation has finished. if there isn't play after 2.5seconds

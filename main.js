@@ -39,6 +39,9 @@ async function LoadSite() {
       user.updateTopTracks = topTracks;
       user.updateUserProfile = profile;
 
+      console.log(user.artists);
+      console.log(user.tracks);
+
       //show the intro or greeting section
 
       const timeline = gsap.timeline({ defaults: { duration: 1 } });

@@ -14,7 +14,7 @@ export async function redirectToAuthCodeFlow(clientId) {
   //add the client id to the search parameters
   params.append("client_id", clientId);
   params.append("response_type", "code");
-  params.append("redirect_uri", "https://545spotifystats.netlify.app");
+  params.append("redirect_uri", "http://localhost:5173/");
   //these are the scopes we want to access
   params.append(
     "scope",
@@ -72,7 +72,7 @@ export async function getAccessToken(clientId, code) {
   //sets the request code to the code we generated
   params.append("code", code);
   //this is the site our request redirects to after weve been authorized
-  params.append("redirect_uri", "https://545spotifystats.netlify.app");
+  params.append("redirect_uri", "http://localhost:5173/");
   //this is the verifier we generated
   params.append("code_verifier", verifier);
 

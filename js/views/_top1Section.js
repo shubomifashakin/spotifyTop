@@ -10,7 +10,8 @@ class Top1 {
   top1section = document.querySelector(".top-1-section");
   top1image = document.querySelector(".top-album-image");
   top1Main = document.querySelector(".top-1-main");
-  top1Name = document.querySelector(".info-top-name");
+  top1Name = document.querySelector(".info-top-name-inner");
+  top1NameLink = document.querySelector(".info-top-link");
   top1From = document.querySelector(".from-album");
   top1FromLabel = document.querySelector(".from-album-label");
   top1AlbumName = document.querySelector(".info-album-name");
