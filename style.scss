@@ -215,7 +215,7 @@ body {
     }
 
     .top-left img {
-      object-fit: cover;
+      object-fit: contain;
       height: 100%;
       width: 100%;
     }
@@ -818,6 +818,25 @@ body {
           overflow-y: hidden;
           display: flex;
           justify-content: flex-start;
+
+          scrollbar-color: var(--primary-color) #000;
+          scrollbar-width: thin;
+
+          &::-webkit-scrollbar {
+            height: 0.25rem;
+            box-sizing: border-box;
+            background: var(--hover-color);
+          }
+
+          &::-webkit-scrollbar-track {
+            height: 20px !important;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background-color: darken($color: #baff29, $amount: 40);
+            // border-radius: 5px;
+            width: 1px;
+          }
 
           .rec-image-link {
             height: 100%;

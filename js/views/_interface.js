@@ -32,6 +32,15 @@ class UI {
     this.navbar.addEventListener("click", this.navbarEventCb.bind(this));
   }
 
+  hideInterfaceElements() {
+    const timeline = gsap.timeline({ defaults: { duration: 1 } });
+
+    timeline
+      .to(this.footer, { display: "none" })
+      .to(this.navbar, { display: "none" }, "<")
+      .to(this.topContainer, { display: "none" }, "<");
+  }
+
   navbarEventCb(e) {
     //if the user clicked the top top tracks or top artists link on the navbar.
     if (e.target.classList.contains("nav-left-link")) {

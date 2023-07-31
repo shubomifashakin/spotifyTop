@@ -189,8 +189,8 @@ body {
   overflow: hidden;
 }
 .top-container .top-1-section .top-left img {
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
   height: 100%;
   width: 100%;
 }
@@ -705,6 +705,20 @@ body {
   overflow-y: hidden;
   display: flex;
   justify-content: flex-start;
+  scrollbar-color: var(--primary-color) #000;
+  scrollbar-width: thin;
+}
+#app .error-section .error-recommendations .inner-recommendations .recommendations::-webkit-scrollbar {
+  height: 0.25rem;
+  box-sizing: border-box;
+  background: var(--hover-color);
+}
+#app .error-section .error-recommendations .inner-recommendations .recommendations::-webkit-scrollbar-track {
+  height: 20px !important;
+}
+#app .error-section .error-recommendations .inner-recommendations .recommendations::-webkit-scrollbar-thumb {
+  background-color: #3e5c00;
+  width: 1px;
 }
 #app .error-section .error-recommendations .inner-recommendations .recommendations .rec-image-link {
   height: 100%;

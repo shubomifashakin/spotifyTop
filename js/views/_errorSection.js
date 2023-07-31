@@ -1,6 +1,9 @@
 import { gsap } from "gsap";
 import { user } from "../../_model";
 import { introSection } from "./_introSection";
+import { top1Section } from "./_top1Section";
+import { top20Section } from "./_top20section";
+import { UserInterface } from "./_interface";
 
 class errorSect {
   errorSection = document.querySelector(".error-section");
@@ -22,24 +25,17 @@ class errorSect {
   returnToIntroSection() {
     const timeline = gsap.timeline({ defaults: { duration: 1 } });
 
-    timeline
-      .to(this.errorSection, { opacity: 1, display: "none" })
-      .to(introSection.introSection, { display: "flex", delay: 1 })
-      .to(introSection.introSectionHead, {
-        opacity: 1,
-        onUpdate: () => {
-          //show the users username
-          introSection.introSectionUsername.textContent =
-            user.getUserProfile.display_name;
-        },
-      })
-      .to(introSection.introSectionLead, { opacity: 1 })
-      .to(introSection.introSectionBtnsCont, { opacity: 1 });
+    timeline.to(this.errorSection, { opacity: 1, display: "none" });
 
-    user.timeline = timeline;
+    introSection.animateIntroSectionToView(timeline);
+
+    user.timeline = "";
   }
 
   showErrorSection(err, recHeader) {
+    //hide the user interface elements(the navbar, footer and top section)
+    UserInterface.hideInterfaceElements();
+    //set the error message
     this.errorMessageSect.textContent = err;
     //for the case where the request actually happened but the user does not have data to supply
     recHeader

@@ -43,14 +43,12 @@ class Top1 {
 
     //change the color to the set color
     //animate the top 1 section out and animate the top 20 section in
-    const timeline = gsap.timeline({
-      defaults: { duration: 1, ease: "linear" },
-    });
+    this.hideTop1Section();
+    top20Section.showTop20Section();
+  }
 
-    timeline
-      .to(this.top1section, { display: "none", opacity: 0 })
-      .to(top20Section.top20Container, { display: "flex", opacity: 1 })
-      .fromTo(".col .top-item", { opacity: 0 }, { opacity: 1, stagger: 0.2 });
+  hideTop1Section() {
+    gsap.to(this.top1section, { display: "none", opacity: 0 });
   }
 }
 

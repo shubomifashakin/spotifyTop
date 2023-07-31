@@ -32,6 +32,18 @@ class top20 {
     document.addEventListener("keydown", this.focusTopItem.bind(this));
   }
 
+  showTop20Section() {
+    const timeline = gsap.timeline({ defaults: { duration: 1 } });
+
+    timeline
+      .to(top20Section.top20Container, {
+        display: "flex",
+        opacity: 1,
+        delay: 1,
+      })
+      .fromTo(".col .top-item", { opacity: 0 }, { opacity: 1, stagger: 0.2 });
+  }
+
   async focusTopItem(e) {
     //gets display value of the top section property
     const inDisplay = getComputedStyle(this.top20Container).display;

@@ -32,6 +32,9 @@ class Intro {
     );
   }
 
+  hideIntroSection() {
+    gsap.to(this.introSection, { opacity: 0, display: "none" });
+  }
   parseToHtml(
     requestedData,
     topName,
@@ -42,7 +45,7 @@ class Intro {
     audSrc,
     reqLink
   ) {
-    console.log(reqLink);
+    // console.log(reqLink);
     top1Section.requestedDataLabel.textContent = requestedData;
     top1Section.top1section.classList.add(`${requestedData}s-active`);
     top1Section.top1Name.textContent = topName;
@@ -113,7 +116,7 @@ class Intro {
     const reqData = user[request + "s"].items;
 
     //if the user does not have any data
-    if (reqData.length < 1) {
+    if (reqData.length < 20) {
       const errHeader = `Opps! it looks like you haven't been very active.`;
 
       const recHeader = `Here are some ${request}s you might like!`;
@@ -137,7 +140,7 @@ class Intro {
       // and if the user is accessing the view from the navbar click, remove the top-20 section if it is there
       user.timeline
         ? this.comingFromIntro(request)
-        : top20Section.hideTop20Section();
+        : (this.hideIntroSection(), top20Section.hideTop20Section());
 
       let imageUrl;
       if (request === "artist") {
@@ -198,12 +201,12 @@ class Intro {
       }
 
       //animate the top 1 section to view
-      this.animateTop1SectionToView(imageUrl);
+      this.animateTop1SectionToView();
     }
   }
 
   //it animates the top1 section into view
-  async animateTop1SectionToView(imageUrl) {
+  async animateTop1SectionToView() {
     //animate the top1 section into view
     const newTimeline = gsap.timeline({ defaults: { duration: 1 } });
 
@@ -231,7 +234,7 @@ class Intro {
 
   animateIntroSectionToView(timeline) {
     timeline
-      .to(this.introSection, { display: "flex", delay: 1 })
+      .to(this.introSection, { display: "flex", opacity: 1, delay: 1 })
       .to(this.introSectionHead, {
         opacity: 1,
         onUpdate: () => {
