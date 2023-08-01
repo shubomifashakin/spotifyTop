@@ -50,6 +50,65 @@ class Top1 {
   hideTop1Section() {
     gsap.to(this.top1section, { display: "none", opacity: 0 });
   }
+
+  parseToHtml(
+    requestedData,
+    topName,
+    albumName,
+    fromLabel,
+    imgSrc,
+    artistName,
+    audSrc,
+    reqLink
+  ) {
+    // console.log(reqLink);
+    this.requestedDataLabel.textContent = requestedData;
+    this.top1section.classList.add(`${requestedData}s-active`);
+    this.top1Name.textContent = topName;
+    this.top1NameLink.href = reqLink;
+    this.top1AlbumName.textContent = albumName;
+    this.top1FromLabel.textContent = fromLabel;
+    this.top1image.src = imgSrc;
+    //if there is an audio src, it means we are showing tracks. so display fromArtists and the see more tracks btn. also hide the see more artists. (& vice versa)
+    audSrc
+      ? ((this.top1FromArtist.style.display = this.seeMoreTracks.style.display =
+          "block"),
+        (this.seeMoreArtists.style.display = "none"))
+      : ((this.seeMoreTracks.style.display = this.top1FromArtist.style.display =
+          "none"),
+        (this.seeMoreArtists.style.display = "block"));
+
+    this.top1ArtistName.textContent = artistName;
+    this.audioEl.src = audSrc;
+    this.audioEl.pause();
+  }
+
+  //it animates the top1 section into view
+  async animateTop1SectionToView() {
+    //animate the top1 section into view
+    const newTimeline = gsap.timeline({ defaults: { duration: 1 } });
+
+    //if there is a timeline stored in the model, set a delay for the animation, so the previous animation can finish
+    newTimeline
+      .to(UserInterface.navbar, {
+        display: "flex",
+        opacity: 1,
+        delay: user.timeline ? 14 : 1,
+      })
+      .to(UserInterface.topContainer, { display: "block" }, "<")
+      .to(top1Section.top1section, { display: "flex", opacity: 1 }, "<")
+      .to(
+        UserInterface.footer,
+        {
+          display: "flex",
+          opacity: 1,
+        },
+        "<"
+      );
+
+    //clear the timeline stored in the userview
+    user.timeline = "";
+  }
 }
 
 export const top1Section = new Top1();

@@ -3,7 +3,6 @@ import { top20Section } from "./_top20section";
 import { user } from "../../_model";
 import { openingSection } from "./_openSection";
 import { UserInterface } from "./_interface";
-import * as HELPERS from "../helpers/_helpers";
 import { gsap } from "gsap";
 import { similarArtists, similarSongs } from "../helpers/_actions";
 import { errorSection } from "./_errorSection";
@@ -34,39 +33,6 @@ class Intro {
 
   hideIntroSection() {
     gsap.to(this.introSection, { opacity: 0, display: "none" });
-  }
-  parseToHtml(
-    requestedData,
-    topName,
-    albumName,
-    fromLabel,
-    imgSrc,
-    artistName,
-    audSrc,
-    reqLink
-  ) {
-    // console.log(reqLink);
-    top1Section.requestedDataLabel.textContent = requestedData;
-    top1Section.top1section.classList.add(`${requestedData}s-active`);
-    top1Section.top1Name.textContent = topName;
-    top1Section.top1NameLink.href = reqLink;
-    top1Section.top1AlbumName.textContent = albumName;
-    top1Section.top1FromLabel.textContent = fromLabel;
-    top1Section.top1image.src = imgSrc;
-    //if there is an audio src, it means we are showing tracks. so display fromArtists and the see more tracks btn. also hide the see more artists. (& vice versa)
-    audSrc
-      ? ((top1Section.top1FromArtist.style.display =
-          top1Section.seeMoreTracks.style.display =
-            "block"),
-        (top1Section.seeMoreArtists.style.display = "none"))
-      : ((top1Section.seeMoreTracks.style.display =
-          top1Section.top1FromArtist.style.display =
-            "none"),
-        (top1Section.seeMoreArtists.style.display = "block"));
-
-    top1Section.top1ArtistName.textContent = artistName;
-    top1Section.audioEl.src = audSrc;
-    top1Section.audioEl.pause();
   }
 
   //insertSimilarHtml
@@ -117,23 +83,29 @@ class Intro {
 
     //if the user does not have any data
     if (reqData.length < 20) {
-      const errHeader = `Opps! it looks like you haven't been very active.`;
+      try {
+        const errHeader = `Opps! it looks like you haven't been very active.`;
 
-      const recHeader = `Here are some ${request}s you might like!`;
+        const recHeader = `Here are some ${request}s you might like!`;
 
-      //hide the intro section
-      gsap.to(this.introSection, { display: "none" });
+        //hide the intro section
+        gsap.to(this.introSection, { display: "none" });
 
-      //get the similar tracks
-      const { tracks: similarTracks } = await similarSongs(user.getAccessToken);
+        //get the similar tracks
+        const { tracks: similarTracks } = await similarSongs(
+          user.getAccessToken
+        );
 
-      const similarTracks6 = similarTracks.slice(0, 6);
+        const similarTracks6 = similarTracks.slice(0, 6);
 
-      //insert the similar data into the error section for recommendations
-      this.insertSimilarToError(similarTracks6);
+        //insert the similar data into the error section for recommendations
+        this.insertSimilarToError(similarTracks6);
 
-      //show the error section
-      errorSection.showErrorSection(errHeader, recHeader);
+        //show the error section
+        errorSection.showErrorSection(errHeader, recHeader);
+      } catch (err) {
+        errorSection.showErrorSection(err);
+      }
     } else {
       //if user is accessing the view from the opening section, there is a timeline to animate from
 
@@ -155,7 +127,7 @@ class Intro {
         UserInterface.navbarLeftArtists.classList.add("active-left");
 
         //set the data in the html
-        this.parseToHtml(
+        top1Section.parseToHtml(
           "artist",
           artistName,
           artistGenres,
@@ -180,7 +152,7 @@ class Intro {
         UserInterface.navbarLeftArtists.classList.remove("active-left");
 
         //add the data to the html
-        this.parseToHtml(
+        top1Section.parseToHtml(
           "track",
           trackName,
           albumName,
@@ -201,35 +173,8 @@ class Intro {
       }
 
       //animate the top 1 section to view
-      this.animateTop1SectionToView();
+      top1Section.animateTop1SectionToView();
     }
-  }
-
-  //it animates the top1 section into view
-  async animateTop1SectionToView() {
-    //animate the top1 section into view
-    const newTimeline = gsap.timeline({ defaults: { duration: 1 } });
-
-    //if there is a timeline stored in the model, set a delay for the animation, so the previous animation can finish
-    newTimeline
-      .to(UserInterface.navbar, {
-        display: "flex",
-        opacity: 1,
-        delay: user.timeline ? 14 : 1,
-      })
-      .to(UserInterface.topContainer, { display: "block" }, "<")
-      .to(top1Section.top1section, { display: "flex", opacity: 1 }, "<")
-      .to(
-        UserInterface.footer,
-        {
-          display: "flex",
-          opacity: 1,
-        },
-        "<"
-      );
-
-    //clear the timeline stored in the userview
-    user.timeline = "";
   }
 
   animateIntroSectionToView(timeline) {

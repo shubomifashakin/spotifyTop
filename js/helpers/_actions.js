@@ -1,3 +1,5 @@
+import { timer } from "./_helpers";
+
 //this gets the users profile info
 export async function fetchProfile(token) {
   try {
@@ -85,15 +87,18 @@ export async function similarSongs(token, trackId) {
     let result;
     if (!trackId) {
       //if the user hasnt used spotify in a while, recommend random songs for them to listen to
-      const fetchAllGenres = await fetch(
-        `https://api.spotify.com/v1/recommendations/available-genre-seeds`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const fetchAllGenres = await Promise.race([
+        fetch(
+          `https://api.spotify.com/v1/recommendations/available-genre-seeds`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ),
+        timer(),
+      ]);
 
       const { genres: allGenres } = await fetchAllGenres.json();
 
@@ -104,28 +109,33 @@ export async function similarSongs(token, trackId) {
       const genreStart = Math.min(...arr);
       const genreEnd = Math.max(...arr);
 
-      const recommendableGenres = allGenres.slice(genreStart, genreEnd);
+      const recommendableGenres = allGenres.slice(genreStart, genreEnd + 1);
       const allGenresString = recommendableGenres.join(",");
-
-      result = await fetch(
-        `https://api.spotify.com/v1/recommendations?seed_genres=${allGenresString}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      result = await Promise.race([
+        fetch(
+          `https://api.spotify.com/v1/recommendations?seed_genres=${allGenresString}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ),
+        timer(),
+      ]);
     } else {
-      result = await fetch(
-        `https://api.spotify.com/v1/recommendations?seed_tracks=${trackId}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      result = await Promise.race([
+        fetch(
+          `https://api.spotify.com/v1/recommendations?seed_tracks=${trackId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ),
+        timer(),
+      ]);
     }
 
     if (!result.ok) {
