@@ -32,6 +32,7 @@ class Top1 {
 
     this.audioEl.pause();
 
+    console.log(e.target.dataset.requestedData);
     //insert the data intro the top 20 section
     top20Section.insertTop20Data(e.target.dataset.requestedData);
     // gsap.to(MobileView.mobileSection, { display: "none" });
@@ -69,14 +70,25 @@ class Top1 {
     this.top1AlbumName.textContent = albumName;
     this.top1FromLabel.textContent = fromLabel;
     this.top1image.src = imgSrc;
+
     //if there is an audio src, it means we are showing tracks. so display fromArtists and the see more tracks btn. also hide the see more artists. (& vice versa)
-    audSrc
-      ? ((this.top1FromArtist.style.display = this.seeMoreTracks.style.display =
-          "block"),
-        (this.seeMoreArtists.style.display = "none"))
-      : ((this.seeMoreTracks.style.display = this.top1FromArtist.style.display =
-          "none"),
-        (this.seeMoreArtists.style.display = "block"));
+
+    if (requestedData === "track") {
+      this.top1FromArtist.style.display = this.seeMoreTracks.style.display =
+        "block";
+      this.seeMoreArtists.style.display = "none";
+    } else {
+      this.seeMoreTracks.style.display = this.top1FromArtist.style.display =
+        "none";
+      this.seeMoreArtists.style.display = "block";
+    }
+    // audSrc
+    //   ? ((this.top1FromArtist.style.display = this.seeMoreTracks.style.display =
+    //       "block"),
+    //     (this.seeMoreArtists.style.display = "none"))
+    //   : ((this.seeMoreTracks.style.display = this.top1FromArtist.style.display =
+    //       "none"),
+    //     (this.seeMoreArtists.style.display = "block"));
 
     this.top1ArtistName.textContent = artistName;
     this.audioEl.src = audSrc;

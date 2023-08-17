@@ -177,7 +177,8 @@ body {
 
                   .spotify-icon {
                     margin-left: 0.25rem;
-                    font-size: inherit;
+                    font-size: 1.25rem;
+                    color: #191414;
                   }
                 }
               }
@@ -244,9 +245,14 @@ body {
             color: inherit !important;
             text-decoration: none;
 
-            & > * {
-              font-size: inherit !important;
+            span {
+              font-size: inherit;
               color: inherit !important;
+            }
+
+            i {
+              color: #191414 !important;
+              font-size: inherit;
             }
           }
         }
@@ -336,10 +342,6 @@ body {
           width: 100%;
           object-fit: contain;
           transition: linear 0.3s;
-
-          &:hover {
-            filter: grayscale(20);
-          }
         }
       }
 
@@ -398,10 +400,6 @@ body {
                 height: 100%;
                 object-fit: contain;
                 transition: linear 0.3s;
-
-                &:hover {
-                  filter: grayscale(20);
-                }
               }
             }
           }
@@ -465,10 +463,6 @@ body {
           .focus-item {
             background-color: var(--primary-color);
           }
-
-          & .top-image {
-            filter: grayscale(20);
-          }
         }
         .top-item-no {
           text-align: center;
@@ -493,7 +487,7 @@ body {
             border-radius: 10px;
 
             .top-image {
-              object-fit: cover;
+              object-fit: contain;
               height: 100%;
               width: 100%;
               transition: linear 0.3s;
@@ -561,7 +555,8 @@ body {
 
                 .spotify-icon {
                   margin-left: 0.25rem;
-                  font-size: 0.75rem;
+                  font-size: 1.35rem;
+                  color: #191414;
                 }
               }
             }
@@ -726,6 +721,11 @@ body {
     }
     .log-in-btn {
       width: 100%;
+
+      i {
+        color: #191414;
+        font-size: 22px;
+      }
     }
   }
 
@@ -847,10 +847,6 @@ body {
               height: 100%;
               object-fit: cover;
               transition: linear 0.3s;
-
-              &:hover {
-                filter: grayscale(20);
-              }
             }
           }
         }
@@ -905,10 +901,6 @@ body {
 
 .focused-item {
   background-color: var(--primary-color) !important;
-
-  .top-image {
-    filter: grayscale(20);
-  }
 }
 
 @media only screen and (max-width: 650px) {
@@ -968,9 +960,13 @@ body {
             font-size: inherit !important;
             color: inherit !important;
 
-            & > * {
-              font-size: inherit !important;
+            span {
+              font-size: inherit;
               color: inherit !important;
+            }
+
+            i {
+              color: #191414 !important;
             }
           }
         }
