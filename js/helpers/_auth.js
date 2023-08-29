@@ -18,7 +18,7 @@ export async function redirectToAuthCodeFlow(clientId) {
   //these are the scopes we want to access
   params.append(
     "scope",
-    "user-read-private user-read-email user-top-read user-follow-read user-read-currently-playing"
+    "user-read-private user-top-read user-read-currently-playing"
   );
   params.append("code_challenge_method", "S256");
   params.append("code_challenge", challenge);
