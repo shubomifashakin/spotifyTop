@@ -11,6 +11,7 @@ export async function redirectToAuthCodeFlow(clientId) {
 
   //we create our search parameters
   const params = new URLSearchParams();
+
   //add the client id to the search parameters
   params.append("client_id", clientId);
   params.append("response_type", "code");
@@ -23,7 +24,6 @@ export async function redirectToAuthCodeFlow(clientId) {
   params.append("code_challenge_method", "S256");
   params.append("code_challenge", challenge);
 
-  // console.log(params);
   //this sets the document url to contain the parameters gotten from the requests and goes to that link
   document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 
@@ -78,14 +78,12 @@ export async function getAccessToken(clientId, code) {
 
   try {
     //send the data to the api
-    const result = await Promise.race([
-      fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params,
-      }),
-      HELPERS.timer(),
-    ]);
+    const result = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params,
+      signal: AbortSignal.timeout(HELPERS.timeOutVal),
+    });
 
     if (!result.ok) {
       throw new Error(result.status);
@@ -95,6 +93,10 @@ export async function getAccessToken(clientId, code) {
     const { access_token } = await result.json();
     return access_token;
   } catch (err) {
+    if (HELPERS.isItATimeOutError(err)) {
+      throw HELPERS.requestTimedOut;
+    }
+
     throw err;
   }
 }

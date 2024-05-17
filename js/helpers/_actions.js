@@ -1,4 +1,4 @@
-import { timer } from "./_helpers";
+import * as HELPERS from "./_helpers";
 
 //this gets the users profile info
 export async function fetchProfile(token) {
@@ -6,6 +6,7 @@ export async function fetchProfile(token) {
     const result = await fetch("https://api.spotify.com/v1/me", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
+      signal: AbortSignal.timeout(HELPERS.timeOutVal),
     });
 
     if (!result.ok) {
@@ -15,6 +16,10 @@ export async function fetchProfile(token) {
     const data = await result.json();
     return data;
   } catch (err) {
+    if (HELPERS.isItATimeOutError(err)) {
+      throw HELPERS.requestTimedOut;
+    }
+
     throw err;
   }
 }
@@ -30,6 +35,7 @@ export async function fetchTop(token, time_range, amount) {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          signal: AbortSignal.timeout(HELPERS.timeOutVal),
         }
       ),
       fetch(
@@ -39,6 +45,7 @@ export async function fetchTop(token, time_range, amount) {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          signal: AbortSignal.timeout(HELPERS.timeOutVal),
         }
       ),
     ]);
@@ -55,6 +62,10 @@ export async function fetchTop(token, time_range, amount) {
     // console.log(tracksData);
     return [tracksData, artistsData];
   } catch (err) {
+    if (HELPERS.isItATimeOutError(err)) {
+      throw HELPERS.requestTimedOut;
+    }
+
     throw err;
   }
 }
@@ -68,6 +79,7 @@ export async function similarArtists(token, id) {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        signal: AbortSignal.timeout(HELPERS.timeOutVal),
       }
     );
 
@@ -78,6 +90,10 @@ export async function similarArtists(token, id) {
     const data = await result.json();
     return data;
   } catch (err) {
+    if (HELPERS.isItATimeOutError(err)) {
+      throw HELPERS.requestTimedOut;
+    }
+
     throw err;
   }
 }
@@ -87,18 +103,16 @@ export async function similarSongs(token, trackId) {
     let result;
     if (!trackId) {
       //if the user hasnt used spotify in a while, recommend random songs for them to listen to
-      const fetchAllGenres = await Promise.race([
-        fetch(
-          `https://api.spotify.com/v1/recommendations/available-genre-seeds`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ),
-        timer(),
-      ]);
+      const fetchAllGenres = await fetch(
+        `https://api.spotify.com/v1/recommendations/available-genre-seeds`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          signal: AbortSignal.timeout(HELPERS.timeOutVal),
+        }
+      );
 
       const { genres: allGenres } = await fetchAllGenres.json();
 
@@ -119,9 +133,9 @@ export async function similarSongs(token, trackId) {
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            signal: AbortSignal.timeout(HELPERS.timeOutVal),
           }
         ),
-        timer(),
       ]);
     } else {
       result = await Promise.race([
@@ -132,9 +146,9 @@ export async function similarSongs(token, trackId) {
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            signal: AbortSignal.timeout(HELPERS.timeOutVal),
           }
         ),
-        timer(),
       ]);
     }
 
@@ -145,6 +159,10 @@ export async function similarSongs(token, trackId) {
     const data = await result.json();
     return data;
   } catch (err) {
+    if (HELPERS.isItATimeOutError(err)) {
+      throw HELPERS.requestTimedOut;
+    }
+
     throw err;
   }
 }
