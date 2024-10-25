@@ -31,9 +31,7 @@ class MobileV {
             label === "Track"
               ? dataReq[x].album.images[0].url
               : dataReq[x].images[0].url
-          } class="mobile-image" alt='${
-        label === "track" ? "Track" : "Artist"
-      } image'/>
+          } class="mobile-image" />
     
       
         </div>
@@ -71,9 +69,7 @@ class MobileV {
             label === "Track"
               ? dataReq[x + 1].album.images[0].url
               : dataReq[x + 1].images[0].url
-          }  class="mobile-image" alt='${
-        label === "track" ? "Track" : "Artist"
-      } image' />
+          }  class="mobile-image" />
     
    
         </div>
@@ -116,9 +112,7 @@ class MobileV {
           label === "Track"
             ? dataReq[x + 2].album.images[0].url
             : dataReq[x + 2].images[0].url
-        } class="mobile-image"  alt='${
-              label === "track" ? "Track" : "Artist"
-            } image'/>
+        } class="mobile-image" />
   
       </div>
   

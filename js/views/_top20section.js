@@ -1,6 +1,5 @@
 import { user } from "../../_model";
 import { gsap } from "gsap";
-
 import { similarArtists, similarSongs } from "../helpers/_actions";
 
 class top20 {
@@ -176,7 +175,7 @@ class top20 {
           similarData[x].images
             ? similarData[x]?.images[0].url
             : similarData[x].album.images[0].url
-        } class="similar-image" alt='spotify image'/>
+        } class="similar-image" />
       </a>`;
 
       html += loopHtml;
@@ -204,7 +203,6 @@ class top20 {
 
     let colNumber = 1;
     let html = "";
-
     for (let x = 0; x < dataReq.length; x += 4) {
       const loopHtml = `
       <div class="col col-${colNumber}">
@@ -218,9 +216,7 @@ class top20 {
               label === "Track"
                 ? dataReq[x].album.images[0].url
                 : dataReq[x].images[0].url
-            } class="top-image" alt='${
-        label === "track" ? "Track" : "Artist"
-      } image' />
+            } class="top-image" />
           </div>
 
             <div class="top-item-details">
@@ -263,9 +259,7 @@ class top20 {
               label === "Track"
                 ? dataReq[x + 1].album.images[0].url
                 : dataReq[x + 1].images[0].url
-            }  class="top-image" alt='${
-        label === "track" ? "Track" : "Artist"
-      } image' />
+            }  class="top-image" />
           </div>
 
           <div class="top-item-details">
@@ -308,9 +302,7 @@ class top20 {
               label === "Track"
                 ? dataReq[x + 2].album.images[0].url
                 : dataReq[x + 2].images[0].url
-            }   class="top-image"  alt='${
-        label === "track" ? "Track" : "Artist"
-      } image'/>
+            }   class="top-image" />
           </div>
 
           <div class="top-item-details">
@@ -353,9 +345,7 @@ class top20 {
               label === "Track"
                 ? dataReq[x + 3].album.images[0].url
                 : dataReq[x + 3].images[0].url
-            }  class="top-image" alt='${
-        label === "track" ? "Track" : "Artist"
-      } image' />
+            }  class="top-image" />
           </div>
 
           <div class="top-item-details">

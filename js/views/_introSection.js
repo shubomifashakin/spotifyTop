@@ -48,7 +48,7 @@ class Intro {
           similarData[x].images
             ? similarData[x]?.images[0].url
             : similarData[x].album.images[0].url
-        } class="recommendations-image" alt='Track Image' />
+        } class="recommendations-image" />
       </a>`;
 
       html += loopHtml;
@@ -96,7 +96,6 @@ class Intro {
           user.getAccessToken
         );
 
-        //recommend 6 similar tracks/artists
         const similarTracks6 = similarTracks.slice(0, 6);
 
         //insert the similar data into the error section for recommendations
@@ -105,7 +104,7 @@ class Intro {
         //show the error section
         errorSection.showErrorSection(errHeader, recHeader);
       } catch (err) {
-        errorSection.showErrorSection(err, "Oops! Something Happened.");
+        errorSection.showErrorSection(err);
       }
     } else {
       //if user is accessing the view from the opening section, there is a timeline to animate from
@@ -183,7 +182,7 @@ class Intro {
       .to(this.introSection, { display: "flex", opacity: 1, delay: 1 })
       .to(this.introSectionHead, {
         opacity: 1,
-        onStart: () => {
+        onUpdate: () => {
           //show the users username
           this.introSectionUsername.textContent =
             user.getUserProfile.display_name;
